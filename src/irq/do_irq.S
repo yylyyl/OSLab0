@@ -23,7 +23,6 @@
 
 # ！调用C编写的中断处理程序(见irq/irq_handle.c)！
 .globl asm_do_irq
-.extern irq_handle
 asm_do_irq:
 	pushal
 
