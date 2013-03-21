@@ -139,6 +139,13 @@ update_keypress(void) {
 		release_key(d);
 		if(die) {
 			die = FALSE;
+			
+			snake_t p = head, q;
+			while(p!=NULL) {
+				q = p->_next;
+				snake_free(p);
+				p = q;
+			}
 			start_snake();
 			return TRUE;
 		}
