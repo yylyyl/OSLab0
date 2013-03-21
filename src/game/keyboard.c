@@ -1,34 +1,35 @@
 #include "common.h"
 #include "string.h"
 
-/* a-z对应的键盘扫描码 */
+#define keys_count 4
+/* < v > ^ 对应的键盘扫描码 */
 static int letter_code[] = {
-	30, 48, 46, 32, 18, 33, 34, 35, 23, 36,
-	37, 38, 50, 49, 24, 25, 16, 19, 31, 20,
-	22, 47, 17, 45, 21, 44
+	75, 80, 77, 72
 };
 /* 对应键按下的标志位 */
-static bool letter_pressed[26];
+static bool letter_pressed[keys_count];
 
 void
 press_key(int scan_code) {
 	int i;
-	for (i = 0; i < 26; i ++) {
+	for (i = 0; i < keys_count; i ++) {
 		if (letter_code[i] == scan_code) {
 			letter_pressed[i] = TRUE;
+		}else{
+			letter_pressed[i] = FALSE;
 		}
 	}
 }
 
 void
 release_key(int index) {
-	assert(0 <= index && index < 26);
+	assert(0 <= index && index < keys_count);
 	letter_pressed[index] = FALSE;
 }
 
 bool
 query_key(int index) {
-	assert(0 <= index && index < 26);
+	assert(0 <= index && index < keys_count);
 	return letter_pressed[index];
 }
 

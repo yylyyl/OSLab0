@@ -7,6 +7,9 @@
 
 #define SCR_WIDTH  320
 #define SCR_HEIGHT 200
+#define game_x 200
+#define game_y 200
+#define snake_size 10
 #define SCR_SIZE ((SCR_WIDTH) * (SCR_HEIGHT))
 #define VMEM_ADDR  ((uint8_t*)0xA0000)
 

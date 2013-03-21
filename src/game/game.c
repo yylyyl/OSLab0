@@ -4,7 +4,7 @@
 #include "device/timer.h"
 
 #define FPS 30
-#define CHARACTER_PER_SECOND 5
+//#define CHARACTER_PER_SECOND 5
 #define UPDATE_PER_SECOND 100
 
 volatile int tick = 0;
@@ -44,7 +44,10 @@ main_loop(void) {
 	int now = 0, target;
 	int num_draw = 0;
 	bool redraw;
-
+	int seed;
+	asm volatile("rdtsc" : "=A" (seed));
+	srand(seed);
+	start_snake();
 	while (TRUE) {
 		wait_for_interrupt();
 		disable_interrupt();
@@ -64,14 +67,14 @@ main_loop(void) {
 		 * 从而主循环中维护的时钟可能与实际时钟相差较多。为了维持游戏的正常运行，必须补上
 		 * 期间错过的每一帧游戏逻辑。 */
 		while (now < target) { 
-			/* 每隔一定时间产生一个新的字符 */
-			if (now % (HZ / CHARACTER_PER_SECOND) == 0) {
-				create_new_letter();
+			/* 每隔一定时间更新蛇 */
+			if (now % (HZ/2) == 0) {
+				update_snake();
 			} 
 			/* 每隔一定时间更新屏幕上字符的位置 */
-			if (now % (HZ / UPDATE_PER_SECOND) == 0) {
-				update_letter_pos();
-			}
+			//if (now % (HZ / UPDATE_PER_SECOND) == 0) {
+			//	update_letter_pos();
+			//}
 			/* 每隔一定时间需要刷新屏幕。注意到这里实现了“跳帧”的机制：假设
 			 *   HZ = 1000, FPS = 100, now = 10, target = 1000
 			 * 即我们要模拟990个时钟中断之间发生的事件，其中包含了9次屏幕更新，
