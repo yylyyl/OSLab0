@@ -31,9 +31,23 @@ redraw_screen() {
 	}
 	int i, j;
 	//draw apple
+	int apple[] = {
+			0,0,0,0,0,1,1,0,0,0,
+			0,0,0,0,0,1,0,0,0,0,
+			0,0,0,1,1,0,1,1,1,0,
+			0,0,1,1,1,1,1,1,0,0,
+			0,1,1,1,1,1,1,1,0,0,
+			0,1,1,1,1,1,1,1,1,0,
+			0,1,1,1,1,1,1,1,1,1,
+			0,0,1,1,1,1,1,1,1,1,
+			0,0,1,1,1,1,1,1,1,0,
+			0,0,0,1,1,0,1,1,0,0
+			};
+
+
 	for(i=0; i<snake_size; i++)
 		for(j=0; j<snake_size; j++)
-			draw_pixel(get_apple_y() * snake_size + j, left + get_apple_x() * snake_size + i, 5);
+			draw_pixel(get_apple_y() * snake_size + j, left + get_apple_x() * snake_size + i, 5*apple[j*10+i]);
 
 	//draw square
 	for(i=0; i<SCR_WIDTH; i++)
