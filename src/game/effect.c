@@ -11,7 +11,7 @@ static snake_t head = NULL;
 static int score = 0;
 static int apple_x=0, apple_y=0;
 static bool die = FALSE;
-static int direction = 0;
+static int direction = 0, next_direction = 0;
 int get_apple_x(void) {
 	return apple_x;
 }
@@ -64,6 +64,8 @@ update_snake(void) {
 	snake_t s = head, tail = NULL;
 	int last_x = -1, last_y = -1;
 	int n = 0;
+
+	direction = next_direction;
 	while ( s != NULL ) {
 		if(s!=head) {
 			int x = s->x, y = s->y;	
@@ -91,6 +93,7 @@ update_snake(void) {
 	}
 	if(head->x < 0 || head->y < 0 || head->x > game_x/snake_size-1 || head->y > game_y/snake_size-1)
 		die = TRUE;
+
 	snake_t p = head->_next;
 	while(p!=NULL) {
 		if(head->x == p->x && head->y == p->y) {
@@ -150,7 +153,7 @@ update_keypress(void) {
 			return TRUE;
 		}
 		if(!(d-dd == 2 || dd-d == 2))
-			direction = d;
+			next_direction = d;
 		return TRUE;
 	}
 
